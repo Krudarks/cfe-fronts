@@ -1,0 +1,75 @@
+<div class="w-full p-6">
+    <div class="mb-4">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Informacion Personal</h2>
+    </div>
+
+    <div class="flex items-center space-x-4 mb-6 mt-5">
+        <ngx-avatars size="50" class="cursor-pointer"
+                     [name]="localStorageService.getAvatarInitials(userData.name)"
+                     [src]="profileUrl">
+        </ngx-avatars>
+
+        <div>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">{{ userData?.name }}</h2>
+            <a class="text-sm text-primary-600 dark:text-primary-400 cursor-pointer" (click)="uploadProfile()">
+                Cambiar la foto de perfil
+            </a>
+            <br>
+            <a class="text-sm text-primary-600 dark:text-primary-400 cursor-pointer" (click)="changePassword()">
+                Cambiar contraseña
+            </a>
+        </div>
+    </div>
+
+    <div class="w-3/4">
+        <form>
+            <div class="mb-4">
+                <label for="username"
+                       class="block text-sm font-bold text-gray-700 dark:text-gray-300">Username</label>
+                <input type="text" id="username"
+                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                       [value]="userData.name">
+            </div>
+
+            <div class="mb-4">
+                <label for="email" class="block text-sm font-bold mt-2 text-gray-700 dark:text-gray-300">Email</label>
+                <input type="email" id="email"
+                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                       [value]="userData.email">
+            </div>
+
+            <ng-container *ngIf="isTeacher">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div class="sm:col-span-3">
+                        <label for="phone"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
+                        <input type="text" name="phone" id="phone" cs-input [value]="userData.teacher.phone">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div class="sm:col-span-3">
+                        <label for="curp"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CURP</label>
+                        <input type="text" name="curp" id="curp" cs-input [value]="userData.teacher.curp">
+                    </div>
+
+                    <div class="sm:col-span-3">
+                        <label for="cedula"
+                               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cédula</label>
+                        <input type="text" name="cedula" id="cedula" cs-input [value]="userData.teacher.cedula">
+                    </div>
+                </div>
+
+                <div>
+                    <label for="ine" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">INE</label>
+                    <input type="text" name="ine" id="ine" cs-input [value]="userData.teacher.ine">
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="isStudent">
+
+            </ng-container>
+        </form>
+    </div>
+</div>

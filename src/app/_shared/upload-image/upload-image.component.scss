@@ -1,0 +1,9 @@
+.drag-over {
+  border-color: rgba(66, 153, 225, 0.5); /* Cambia el color y la opacidad según tu preferencia */
+  box-shadow: 0 0 5px rgba(66, 153, 225, 0.5); /* Agrega una sombra cuando se arrastra sobre el área */
+}
+
+.drag-over-fail {
+  border-color: rgba(225, 66, 90, 0.5); /* Cambia el color y la opacidad según tu preferencia */
+  box-shadow: 0 0 5px rgba(225, 66, 90, 0.5); /* Agrega una sombra cuando se arrastra sobre el área */
+}

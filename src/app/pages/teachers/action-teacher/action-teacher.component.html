@@ -1,0 +1,62 @@
+<div class="p-3">
+    <form class="space-y-4" [formGroup]="formGroup">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div class="sm:col-span-6">
+                <label for="name"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                <input type="text" name="name" id="name" formControlName="name" cs-input required>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div class="sm:col-span-6">
+                <label for="email"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                <input type="email" name="email" id="email" formControlName="email" cs-input required>
+            </div>
+        </div>
+    </form>
+
+
+    <form class="space-y-4 mt-2" [formGroup]="formGroupTeacher">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div class="sm:col-span-6">
+                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Teléfono</label>
+                <input type="text" name="phone" id="phone" formControlName="phone" cs-input required>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div class="sm:col-span-3">
+                <label for="curp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CURP</label>
+                <input type="text" name="curp" id="curp" formControlName="curp" cs-input required>
+            </div>
+
+            <div class="sm:col-span-3">
+                <label for="cedula" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cédula</label>
+                <input type="text" name="cedula" id="cedula" formControlName="cedula" cs-input required>
+            </div>
+        </div>
+
+        <div>
+            <label for="ine" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">INE</label>
+            <input type="text" name="ine" id="ine" formControlName="ine" cs-input required>
+        </div>
+    </form>
+
+    <mat-progress-bar mode="indeterminate" *ngIf="loadProcess"></mat-progress-bar>
+
+    <div class="flex justify-end">
+        <div class="w-full mt-3 space-x-4">
+            <button type="submit" btn-color color="primary" (click)="onSubmit()">
+                <i class="fa-solid fa-floppy-disk mr-2"></i>
+                Confirmar
+            </button>
+
+            <button type="button" btn-color color="danger" mat-dialog-close>
+                <i class="fa-solid fa-xmark mr-2"></i>
+                Cerrar
+            </button>
+        </div>
+    </div>
+</div>

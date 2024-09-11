@@ -1,0 +1,2 @@
+
+export const NEW_USER_NOTIFICATION      = 'NEW_USER_NOTIFICATION';

@@ -1,0 +1,78 @@
+<mat-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="teachersForm" label="Selecciona un Maestro">
+        <form [formGroup]="teachersForm">
+            <mat-form-field class="w-full">
+                <mat-select placeholder="Maestros" formControlName="firstCtrl" required>
+                    <mat-option *ngFor="let teacher of teachers" [value]="teacher">
+                        {{ teacher.user.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class='flex justify-end mt-3'>
+                <button type="button" (click)="validateOne()"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Siguiente
+                </button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="groupsForm" label="Selecciona un Grupo">
+        <form [formGroup]="groupsForm">
+            <mat-form-field class="w-full">
+                <mat-select placeholder="Grupos" formControlName="secondCtrl" required>
+                    <mat-option *ngFor="let group of groups" [value]="group">
+                        {{ group.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div class='flex justify-end gap-4 mt-3'>
+                <button type="button" matStepperPrevious
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Regresar
+                </button>
+
+                <button type="button" (click)="validateTwo()"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Siguiente
+                </button>
+            </div>
+        </form>
+    </mat-step>
+
+    <mat-step [stepControl]="mountForm" label="Ingresa el Monto">
+        <form [formGroup]="mountForm">
+            <mat-form-field class="w-full">
+                <input matInput type="mumber" formControlName="mount" placeholder="Monto" required>
+
+                <ng-container *ngIf="mountForm.get('mount').hasError('required')">
+                    <p class="mt-2 text-sm text-red-600">El monto es obligatorio.</p>
+                </ng-container>
+                <ng-container *ngIf="mountForm.get('mount').hasError('decimalNumber')">
+                    <p class="mt-2 text-sm text-red-600">El monto debe ser un número con hasta dos decimales.</p>
+                </ng-container>
+            </mat-form-field>
+
+            <div class='flex justify-end gap-3 mt-3'>
+                <button type="button" matStepperPrevious
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Regresar
+                </button>
+
+                <button type="button" (click)="stepper.reset()"
+                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Reset
+                </button>
+
+                <button type="button" (click)="paymentUp()"
+                        class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </mat-step>
+</mat-stepper>
+
+<app-alert-banner #alertBanner></app-alert-banner>

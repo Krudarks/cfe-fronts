@@ -1,0 +1,50 @@
+<!-- component -->
+<div class="flex h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat"
+     style="background-image:url('assets/img/cfe.jpg')">
+    <!-- component -->
+    <div class="w-full min-h-screen  bg-gray-800 bg-opacity-60 flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+        <div class="w-full sm:max-w-md p-5 mx-auto">
+            <h2 class="mb-12 text-center text-5xl font-extrabold text-white">Iniciar Sesion.</h2>
+            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+                <div class="mb-4">
+                    <label class="block mb-1 text-white" for="email">Correo</label>
+                    <input id="email" type="text" name="email" formControlName="email"
+                           class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
+                </div>
+                <div class="mb-4">
+                    <label class="block mb-1 text-white" for="password">Contraseña</label>
+                    <input id="password" type="password" name="password" formControlName="password"
+                           class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
+                </div>
+                <div class="mt-6 flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember_me" type="checkbox" formControlName="remember"
+                               class="border border-gray-300 text-primary-600 shadow-sm focus:border-red-300 focus:ring focus:primary-red-200 focus:ring-opacity-50"/>
+                        <label for="remember_me" class="text-white ml-2 block text-sm leading-5 hover:text-primary-500">
+                            Recordar Contraseña
+                        </label>
+                    </div>
+                    <a class="text-sm text-white hover:text-primary-500" routerLink="/auth/forgot-password">
+                        ¿Ha olvidado su contraseña?
+                    </a>
+                </div>
+
+                <button [disabled]="loadProcess" class="hidden"></button>
+            </form>
+
+            <div class="mt-6 flex items-center justify-between">
+                <button (click)="onSubmit()" [disabled]="loadProcess"
+                        class="w-full inline-flex items-center justify-center px-4 py-2 bg-primary-600 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-primary-700 active:bg-primary-700 focus:outline-none focus:border-primary-700 focus:ring focus:ring-primary-200 disabled:opacity-25 transition">
+                    Ingresar
+                </button>
+
+                <button routerLink="/auth/register" [disabled]="loadProcess"
+                        class="w-full ml-2 inline-flex items-center justify-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-gray-700 active:bg-gray-700 focus:outline-none focus:border-gray-700 focus:ring focus:ring-gray-200 disabled:opacity-25 transition">
+                    Registrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-alert-banner #alertBannerComponent></app-alert-banner>

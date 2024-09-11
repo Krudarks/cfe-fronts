@@ -1,0 +1,22 @@
+<div mat-dialog-title class="w-full bg-white dark:bg-gray-800">
+    <div class="flex justify-between items-center">
+        <h5 class="inline-flex items-center text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">
+            <i [class]="dialogData.icon" class="mr-2" *ngIf="dialogData.icon"></i>
+            {{ dialogData.title }}
+        </h5>
+
+        <button type="button" mat-dialog-close
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+</div>
+
+<mat-dialog-content>
+    <div class="w-full p-4 bg-white dark:bg-gray-800">
+        <ng-container renderComponent
+                      [component]="dialogData.component"
+                      [dialogData]="dialogData.dialogData">
+        </ng-container>
+    </div>
+</mat-dialog-content>

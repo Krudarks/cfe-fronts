@@ -1,0 +1,58 @@
+<div class="flex justify-center items-center mt-2 flex-col">
+    <image-cropper class="image-cropper" format="png"
+                   [imageURL]="url"
+                   [imageChangedEvent]="imageChangedEvent"
+                   [aspectRatio]="4 / 4"
+                   [resizeToWidth]="100"
+                   [resizeToHeight]="100"
+                   [transform]="transform"
+                   [roundCropper]="true"
+                   [maintainAspectRatio]="true"
+                   [containWithinAspectRatio]="true"
+                   [hideResizeSquares]="false"
+                   (imageCropped)="imageCropped($event)">
+    </image-cropper>
+
+    <p class="text-white mt-2">Arrastra para Modificar la fFoto</p>
+</div>
+
+<div class="text-start">
+    <mat-label class="mr-2">Zoom</mat-label>
+    <mat-slider class="ml-2" min="1" max="5">
+        <input matSliderThumb [value]="scale" (valueChange)="zoom($event)"/>
+    </mat-slider>
+
+    <mat-label class="mr-2">Girar</mat-label>
+    <mat-slider class="ml-2" min="1" max="360">
+        <input matSliderThumb [value]="rotation" (valueChange)="rotationUpdate($event)"/>
+    </mat-slider>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="button-actions mt-3 space-x-2">
+    <button mat-flat-button color="primary" (click)="deleteProfile()" [disabled]="buttonDisabled">
+        Borrar Foto
+    </button>
+
+    <button mat-raised-button color="accent" (click)="resetImage()">
+        Reiniciar Configuración
+    </button>
+
+    <button mat-raised-button color="primary" (click)="fileInput.click()">
+        Elegir Foto
+    </button>
+
+    <input hidden #fileInput type="file" (change)="fileChangeEvent($event)" accept="image/*">
+
+    <button mat-raised-button color="primary" (click)="uploadProfile()" [disabled]="buttonDisabled">
+        <i class="fa-solid fa-floppy-disk ms-2"></i> Guardar
+    </button>
+
+    <button mat-raised-button color="warn" mat-dialog-close [disabled]="buttonDisabled">
+        Cerrar
+    </button>
+</div>
+
+
+

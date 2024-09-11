@@ -1,0 +1,16 @@
+.hs-accordion-toggle {
+  cursor: pointer;
+}
+
+.hs-accordion-active .hs-accordion-content {
+  display: block;
+}
+
+.hs-accordion-content.hidden {
+  display: none;
+}
+
+.bg-item {
+  --tw-bg-opacity: 1;
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}

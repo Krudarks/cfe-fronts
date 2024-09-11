@@ -1,0 +1,88 @@
+<div class="w-full p-6">
+    <div class="mb-4">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Dashboard</h2>
+    </div>
+
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-2 my-3">
+        <div class="col-span-1">
+            <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800">
+                <div class="flex items-center justify-between p-3">
+                    <h5 class="text-lg font-bold leading-none text-gray-900 dark:text-white">Trabajadores Nuevos</h5>
+                </div>
+                <div class="flow-root p-3">
+                    <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-100">
+                        @for (item of lastStudents; track item) {
+                            <li class="py-3 sm:py-4">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0">
+                                        <img class="w-8 h-8 rounded-full" src="https://avatar.iran.liara.run/public/boy"
+                                             alt="Neil image">
+                                    </div>
+                                    <div class="flex-1 min-w-0 ms-4">
+                                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                            {{ item.name }}
+                                        </p>
+                                        <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                            {{ item.email }} - <b> Agregado el
+                                            Dia: </b>{{ item.created_at | date:'dd/MM/yyyy' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </li>
+                        } @empty {
+                            <li>No items found</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-span-1">
+            <div class="overflow-x-auto">
+                <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800">
+                    <div class="flex items-center justify-between p-3">
+                        <h5 class="text-lg font-bold leading-none text-gray-900 dark:text-white">Recordatorios</h5>
+
+                        <button class="px-4 py-2 text-sm text-dark font-semibold bg-primary-300 rounded-md mb-3"
+                                (click)="actionNote(actions.add)">
+                            <i class="fa-solid fa-plus me-2"></i>
+                            Agregar
+                        </button>
+                    </div>
+                    <div class="flow-root p-3">
+                        <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-100">
+                            @for (item of notes; track item) {
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h5 class="mb-2 text-base font-bold tracking-tight text-gray-900 dark:text-white">
+                                            Nota Agregada el Dia: {{ item.created_at | date:'dd/MM/yyyy' }}
+                                        </h5>
+                                        <p class="font-normal text-gray-700 dark:text-gray-400">
+                                            {{ item.description }}
+                                        </p>
+                                    </div>
+                                    <button class="px-4 py-2 text-sm text-white font-semibold bg-red-600 rounded-md"
+                                            [disabled]="loadProcess" matTooltip="Eliminar" matTooltipPosition="above"
+                                            (click)="deleteNote(item)">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            } @empty {
+                                <li>No items found</li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Comentado el gráfico, puedes descomentar cuando lo necesites
+        <div class="col-span-1">
+            <div class="flex justify-center mt-3">
+                <div class="w-full max-w-md bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                    <div id="column-chart"></div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</div>

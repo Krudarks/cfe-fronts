@@ -1,0 +1,85 @@
+<div class="w-full p-6">
+    <div class="mb-4">
+        @if (isAdmin) {
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pagos a Mestros</h2>
+
+            <div class="my-3 flex justify-end">
+                <button (click)="addPayment()"
+                        class="px-4 py-2 text-sm text-dark font-semibold bg-primary-300 rounded-md">
+                    <i class="fa-solid fa-plus me-2"></i>
+                    Realizar Pago
+                </button>
+            </div>
+
+        } @else {
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pagos Recibidos</h2>
+        }
+
+
+        <div class="overflow-x-scroll-70">
+            <table class="min-w-full bg-white dark:bg-gray-800">
+                <thead>
+                <tr>
+                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                        Fecha de Pago
+                    </th>
+                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                        Monto
+                    </th>
+                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                        Grupo Pagado
+                    </th>
+
+                    @if (isAdmin) {
+                        <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                            Maestro
+                        </th>
+                        <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                            Accion
+                        </th>
+                    }
+                </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-100">
+                    @for (student of paymentsAll | filter : searchText; track student) {
+                        <tr>
+                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ student.created_at }}</td>
+                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ student.mount }}</td>
+                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ student.group.name }}</td>
+
+                            @if (isAdmin) {
+                                <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ student.teacher.name }}</td>
+
+                                <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">
+                                    <button type="button" [matMenuTriggerFor]="menu" btn-color color="primary"
+                                            [raised]="true" (click)="setItem(student)">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </td>
+                            }
+                        </tr>
+                    } @empty {
+                        @if (isAdmin) {
+                            No se ah realizado ningun pago
+                        } @else {
+                            No se ah recibido ningun pago
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<mat-menu #menu="matMenu">
+    <ul class="py-2 dark:bg-gray-800" aria-labelledby="dropdownButton">
+        <li>
+            <a (click)="addPayment()"
+               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                <i class="fa-solid fa-plus me-2"></i>
+                Realizar Pago
+            </a>
+        </li>
+    </ul>
+</mat-menu>

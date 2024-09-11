@@ -1,0 +1,27 @@
+<div class="inset-0 overflow-y-auto">
+    <div class="fixed inset-0"></div>
+    <div class="relative w-auto max-w-md mx-auto my-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg relative flex flex-col w-full p-5">
+            <div class="flex items-start justify-between mb-4">
+                <h3 class="text-xl font-semibold dark:text-white">¿Cerrar sesión?</h3>
+                <button class="text-gray-600 hover:text-gray-800 dark:text-white dark:hover:text-gray-200 focus:outline-none"
+                        [mat-dialog-close]="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300">¿Estás seguro de que quieres cerrar sesión?</p>
+            <div class="mt-6 flex justify-end">
+                <button [mat-dialog-close]="false"
+                        class="px-4 py-2 text-sm font-semibold text-gray-600 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600 dark:hover:text-white rounded-md mr-4">
+                    Cancelar
+                </button>
+                <button class="px-4 py-2 text-sm font-semibold text-white bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 rounded-md"
+                        [mat-dialog-close]="true">Cerrar sesión
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

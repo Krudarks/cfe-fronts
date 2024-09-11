@@ -1,0 +1,20 @@
+<div class="bg-primary-400 container-user-data">
+    <div class="p-3 pt-5">
+        <div class="flex items-center gap-3 mb-2">
+            <ngx-avatars size="50" class="cursor-pointer"
+                         (click)="uploadProfile()"
+                         [name]="localStorageService.getAvatarInitials(userData.name)"
+                         [src]="profileUrl">
+            </ngx-avatars>
+
+            <div class="flex flex-col text-black">
+                <span class="me-2 font-bold">Hola! Sr. {{ userData.name }}</span>
+                <span class="me-2 font-bold">Rol {{ userData.role.name }}</span>
+            </div>
+        </div>
+
+        <p class="text-lg mt-3 font-bold leading-none text-black">
+            <a>CFE</a>
+        </p>
+    </div>
+</div>

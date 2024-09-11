@@ -1,0 +1,137 @@
+@use '@angular/material'as mat;
+
+@include mat.all-component-typographies();
+@include mat.core();
+
+// Generate your theme here: http://mcg.mbitson.com/
+// Theme Colors Variables 500
+// Main Colors //
+$primary: #00dd58;
+$accent: #70ffaa;
+$warn: #e46a76;
+
+$contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+);
+
+$theme-primary: (
+        50 : #e0fbeb,
+        100 : #b3f5cd,
+        200 : #80eeac,
+        300 : #4de78a,
+        400 : #26e271,
+        500 : #00dd58,
+        600 : #00d950,
+        700 : #00d447,
+        800 : #00cf3d,
+        900 : #00c72d,
+        A100 : #effff1,
+        A200 : #bcffc6,
+        A400 : #89ff9b,
+        A700 : #6fff86,
+        contrast: $contrast
+);
+
+$theme-accent: (
+        50 : #eefff5,
+        100 : #d4ffe6,
+        200 : #b8ffd5,
+        300 : #9bffc4,
+        400 : #85ffb7,
+        500 : #70ffaa,
+        600 : #68ffa3,
+        700 : #5dff99,
+        800 : #53ff90,
+        900 : #41ff7f,
+        A100 : #ffffff,
+        A200 : #ffffff,
+        A400 : #e9fff0,
+        A700 : #cfffde,
+        contrast: $contrast
+);
+
+$theme-warn: (
+        50 : #fcedef,
+        100 : #f7d2d6,
+        200 : #f2b5bb,
+        300 : #ec979f,
+        400 : #e8808b,
+        500 : #e46a76,
+        600 : #e1626e,
+        700: #5d363a,
+        800 : #d94d59,
+        900 : #d13c46,
+        A100 : #ffffff,
+        A200 : #ffebed,
+        A400 : #ffb8bd,
+        A700 : #ff9fa5,
+        contrast: $contrast
+);
+
+$theme-angular-theme: mat.define-light-theme((
+        color: (
+                primary: mat.define-palette($theme-primary),
+                accent: mat.define-palette($theme-accent),
+                warn: mat.define-palette($theme-warn),
+        ),
+        typography: mat.define-typography-config(
+                $font-family: "Poppins, sans-serif",
+        ),
+        density: -2
+));
+
+// Density Components Style Small
+@include mat.table-density(-4);
+@include mat.form-field-density(-5);
+@include mat.checkbox-density(-3);
+@include mat.button-density(-2);
+@include mat.icon-button-density(-5);
+@include mat.radio-density(-3);
+
+@include mat.all-component-themes($theme-angular-theme);
+
+//// theme dark
+$angular-dark-theme: mat.define-dark-theme((
+        color: (
+                primary: mat.define-palette($theme-primary, 500, 100, 700),
+                accent: mat.define-palette($theme-accent, A200, A100, A400),
+                warn: mat.define-palette($theme-warn),
+        ),
+        typography: mat.define-typography-config(
+                $font-family: "Poppins, sans-serif",
+        ),
+        density: -2
+));
+
+.dark-theme {
+  @include mat.all-component-colors($angular-dark-theme);
+  @import "theme_dark";
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Poppins, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}

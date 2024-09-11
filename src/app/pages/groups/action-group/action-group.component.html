@@ -1,0 +1,41 @@
+<div class="p-3">
+    <form class="space-y-4" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div class="sm:col-span-3">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                <input type="text" name="name" id="name" formControlName="name" cs-input required>
+            </div>
+
+            <div class="sm:col-span-3">
+                <label for="lastName"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Descripcion</label>
+                <input type="text" name="lastName" id="lastName" formControlName="description" cs-input required>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div class="sm:col-span-6">
+                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Limite de Alumnos
+                </label>
+                <input type="number" name="phone" id="phone" formControlName="limit" cs-input required>
+            </div>
+        </div>
+
+        <button type="submit" class="hidden"></button>
+    </form>
+
+    <div class="flex justify-end">
+        <div class="w-full mt-3 space-x-4">
+            <button type="submit" btn-color color="primary" (click)="onSubmit()" [disabled]="loadProcess">
+                <i class="fa-solid fa-floppy-disk mr-2"></i>
+                Confirmar
+            </button>
+
+            <button type="button" btn-color color="danger" mat-dialog-close>
+                <i class="fa-solid fa-xmark mr-2"></i>
+                Cerrar
+            </button>
+        </div>
+    </div>
+</div>

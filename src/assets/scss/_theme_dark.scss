@@ -1,0 +1,80 @@
+.bg-item {
+  background-color: var(--gray-600) !important;
+}
+
+.mat-drawer-side {
+  border-right: none !important;
+}
+
+.layout-sidebar {
+  background-color: transparent !important;
+}
+
+mat-sidenav {
+  background-color: var(--bs-dark) !important;
+}
+
+.mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #ffffff !important;
+}
+
+.layout-menu {
+  ul {
+    a {
+      &.active-link {
+        background-color: var(--bs-dark) !important;
+      }
+
+      &:hover {
+        background-color: var(--bs-dark) !important;
+      }
+    }
+  }
+}
+
+.layout-root-menuitem {
+  > .layout-menuitem-root-text {
+    color: var(--bs-light) !important;
+  }
+
+  > a {
+    display: none;
+  }
+}
+
+.text-black {
+  //color: var(--bs-light) !important;
+}
+
+.node-content-wrapper-active, .node-content-wrapper-focused {
+  background: var(--bs-dark) !important;
+}
+
+.node-content-wrapper:hover, .node-content-wrapper:focus,
+.node-content-wrapper:active {
+  background: var(--bs-dark) !important;
+}
+
+.mat-datepicker-content-container {
+  background-color: var(--gray-900) !important;
+}
+
+.tree::before {
+  border-left: 1px dotted #ffffff !important;
+}
+
+.tree-node:not(.tree-node-leaf)::before {
+  border-bottom: 1px dotted #ffffff !important;
+}
+
+.mat-mdc-input-element {
+  caret-color: rgba(168, 154, 161, 0.37) !important;
+}
+
+
+.element-focused {
+  background-color: #4f80a9 !important;
+  color: white;
+  opacity: 70%;
+}
+

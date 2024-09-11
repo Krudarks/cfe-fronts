@@ -1,0 +1,52 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-2xl font-bold mb-4">Listado de Asistencias</h1>
+
+  <!-- Tabla de Asistencias -->
+  <div class="bg-white shadow-md rounded my-6">
+    <table class="min-w-full bg-white">
+      <thead>
+      <tr>
+        <th class="py-2 px-4 bg-gray-200">Noreporte</th>
+        <th class="py-2 px-4 bg-gray-200">Fecha</th>
+        <th class="py-2 px-4 bg-gray-200">Opciones</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let report of attendanceReports">
+        <td class="border px-4 py-2">{{ report.noReporte }}</td>
+        <td class="border px-4 py-2">{{ report.fecha }}</td>
+        <td class="border px-4 py-2">
+          <!-- Icono con opciones -->
+          <div class="relative">
+            <button (click)="toggleDropdown(report.id)" class="focus:outline-none">
+              <!-- Icono de tres puntos -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m6-6H6" />
+              </svg>
+            </button>
+            <!-- Menú desplegable -->
+            <div *ngIf="openDropdown === report.id" class="absolute right-0 bg-white shadow-md rounded mt-2 z-10">
+              <ul>
+                <li (click)="verReporte(report.id)" class="py-2 px-4 hover:bg-gray-100 cursor-pointer">Ver reporte</li>
+                <li (click)="descargarReporte(report.id)" class="py-2 px-4 hover:bg-gray-100 cursor-pointer">Descargar</li>
+                <li (click)="editarReporte(report.id)" class="py-2 px-4 hover:bg-gray-100 cursor-pointer">Editar</li>
+              </ul>
+            </div>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Botón para tomar asistencia -->
+  <li *ngFor="let item of menuItems">
+  <a
+    [routerLink]="item.routerLink"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+  >
+    Tomar asistencia
+  </a>
+  </li>
+</div>
+

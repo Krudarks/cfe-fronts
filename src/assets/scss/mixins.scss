@@ -1,0 +1,134 @@
+@mixin focused() {
+  outline: 0 none;
+  outline-offset: 0;
+  transition: box-shadow .2s;
+}
+
+@mixin focused-inset() {
+  outline: 0 none;
+  outline-offset: 0;
+  transition: box-shadow .2s;
+}
+
+// Colors //
+$color-array: (
+        "primary": $primary,
+        "accent": $accent,
+        "secondary": $secondary,
+        "success": $success,
+        "blue": #1c53b9,
+        "info": $info,
+        "warning": $warning,
+        "danger": $error,
+        "indigo": $indigo,
+        "light": $light,
+        "dark": $dark,
+        "muted": $muted,
+        "white": $white,
+        "black": $black,
+        "light-primary": $light-primary,
+        "light-info": $light-info,
+        "light-muted": $light-muted,
+);
+
+@each $color-name,
+$color-value in $color-array {
+  .text-hover-#{$color-name} {
+    &:hover {
+      color: rgba($color: $color-value, $alpha: 0.6);
+    }
+  }
+
+  .text-#{$color-name} {
+    color: $color-value !important;
+  }
+
+  //.bg-#{$color-name} {
+  //  background-color: $color-value !important;
+  //}
+
+  .color-#{$color-name} {
+    color: $color-value !important;
+  }
+
+
+  .bg-op-#{$color-name} {
+    background-color: rgba($color: $color-value, $alpha: 1);
+  }
+
+  .bg-gr-#{$color-name} {
+    background: linear-gradient(45deg, $color-value, #e2d2fd);
+  }
+
+  .btn-#{$color-name} {
+    background-color: $color-value;
+    transition: all 0.4s ease-in-out;
+    color: $white;
+
+    &:hover {
+      background-color: rgba($color: $color-value, $alpha: 0.6);
+    }
+  }
+
+  .bg-after-#{$color-name} {
+    &:after {
+      background-color: $color-value !important;
+    }
+  }
+
+  .btn-hover-#{$color-name} {
+    &:hover {
+      background-color: rgba($color: $color-value, $alpha: 0.8) !important;
+    }
+  }
+}
+
+@mixin overflow-x-scroll($height) {
+  .overflow-x-scroll-#{$height} {
+    max-height: #{$height + "vh"};
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+}
+
+@include overflow-x-scroll(20);
+@include overflow-x-scroll(25);
+@include overflow-x-scroll(30);
+@include overflow-x-scroll(35);
+@include overflow-x-scroll(40);
+@include overflow-x-scroll(45);
+@include overflow-x-scroll(50);
+@include overflow-x-scroll(55);
+@include overflow-x-scroll(60);
+@include overflow-x-scroll(65);
+@include overflow-x-scroll(70);
+@include overflow-x-scroll(75);
+@include overflow-x-scroll(80);
+@include overflow-x-scroll(85);
+
+// Widths //
+$w: 10;
+@while $w <= 100 {
+  .w-#{$w} {
+    width: 1% * $w;
+  }
+
+  $w: $w+1;
+}
+
+// Font Weights //
+$font-map: (
+        "lighter": 100,
+        "light": 300,
+        "normal": 400,
+        "medium": 500,
+        "semi-bold": 600,
+        "bold": 700,
+        "black": 800
+);
+
+@each $font-weight in map-keys($font-map) {
+  .fw-#{$font-weight} {
+    font-weight: map-get($font-map, $font-weight);
+  }
+}
