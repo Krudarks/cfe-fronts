@@ -12,7 +12,7 @@ export class VehicleService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any[]> {
-    return this.http.get<any[]>(`${ this.baseUrl }`);
+    return this.http.get<any[]>(this.baseUrl);
   }
 
   getById(id: number): Observable<any> {

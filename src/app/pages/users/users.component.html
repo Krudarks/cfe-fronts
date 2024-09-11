@@ -1,171 +1,177 @@
 <div class="w-full p-6">
-    <div class="mb-4">
-        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Trabajadores</h2>
+  <div class="mb-4">
+    <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Trabajadores</h2>
+  </div>
+
+  <div class="grid grid-cols-12 gap-4 my-3">
+    <div class="col-span-7">
+      <input type="text" placeholder="Search..." [(ngModel)]="searchText"
+             class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-100 dark:text-white">
     </div>
 
-    <div class="grid grid-cols-12 gap-4 my-3">
-        <div class="col-span-7">
-            <input type="text" placeholder="Search..." [(ngModel)]="searchText"
-                   class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-100 dark:text-white">
+    <div class="col-span-5">
+      <div class="flex justify-end items-center">
+        <div class="flex space-x-2">
+          <button class="p-2 rounded-md"
+                  [ngClass]="{'bg-primary-200 text-dark': viewTable, 'bg-gray-200 dark:bg-gray-800': !viewTable, }"
+                  (click)="changeView('table')">
+            <i class="fa-solid fa-list"></i>
+          </button>
+          <button class="p-2 rounded-md "
+                  [ngClass]="{'bg-primary-200 text-dark': !viewTable, 'bg-gray-200 dark:bg-gray-800': viewTable }"
+                  (click)="changeView('grid')">
+            <i class="fa-solid fa-border-all"></i>
+          </button>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="col-span-5">
-            <div class="flex justify-end items-center">
-                <div class="flex space-x-2">
-                    <button class="p-2 rounded-md"
-                            [ngClass]="{'bg-primary-200 text-dark': viewTable, 'bg-gray-200 dark:bg-gray-800': !viewTable, }"
-                            (click)="changeView('table')">
-                        <i class="fa-solid fa-list"></i>
-                    </button>
-                    <button class="p-2 rounded-md "
-                            [ngClass]="{'bg-primary-200 text-dark': !viewTable, 'bg-gray-200 dark:bg-gray-800': viewTable }"
-                            (click)="changeView('grid')">
-                        <i class="fa-solid fa-border-all"></i>
-                    </button>
-                </div>
+  <div class="my-3 flex justify-end">
+    <button class="px-4 py-2 text-sm text-dark font-semibold bg-primary-300 rounded-md"
+            (click)="actionUser(actions.add)">
+      <i class="fa-solid fa-plus me-2"></i>
+      Agregar
+    </button>
+  </div>
+
+  <mat-progress-bar mode="indeterminate" *ngIf="loadProcess"></mat-progress-bar>
+
+  @if (viewTable) {
+    <div class="overflow-x-scroll-70">
+      <table class="min-w-full bg-white dark:bg-gray-800">
+        <thead>
+        <tr>
+          <th
+            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+            ID
+          </th>
+          <th
+            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+            Nombre
+          </th>
+          <th
+            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+            Email
+          </th>
+          <th
+            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+            Role
+          </th>
+          <th
+            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+            Opciones
+          </th>
+        </tr>
+        </thead>
+
+        <tbody class="divide-y divide-gray-200 dark:divide-gray-100">
+          @for (worker of usersSystem | filter : searchText; track worker) {
+            <tr>
+              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ worker.id }}</td>
+              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ worker.name }}</td>
+              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ worker.email }}</td>
+              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ worker?.role?.name }}</td>
+              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">
+                <button type="button" [matMenuTriggerFor]="menu" btn-color color="primary"
+                        [raised]="true" (click)="setItem(worker)">
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <nav aria-label="Page navigation example" class="text-right me-4">
+      <ul class="inline-flex -space-x-px text-sm mt-3">
+        <li>
+          <a
+            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+        </li>
+        <li>
+          <a
+            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+        </li>
+        <li>
+          <a
+            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+        </li>
+        <li>
+          <a aria-current="page"
+             class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+        </li>
+        <li>
+          <a
+            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+        </li>
+        <li>
+          <a
+            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+        </li>
+        <li>
+          <a
+            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+        </li>
+      </ul>
+    </nav>
+  } @else {
+    <div class="overflow-x-scroll-75">
+      <div class="flex flex-wrap gap-2 justify-center">
+        @for (worker of usersSystem | filter : searchText; track worker) {
+          <div class="w-1/6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="flex justify-end px-4 pt-4">
+              <button (click)="setItem(worker)" [matMenuTriggerFor]="menu"
+                      class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
+                      type="button">
+                <span class="sr-only">Open dropdown</span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                     fill="currentColor" viewBox="0 0 16 3">
+                  <path
+                    d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                </svg>
+              </button>
             </div>
-        </div>
-    </div>
-
-    <div class="my-3 flex justify-end">
-        <button class="px-4 py-2 text-sm text-dark font-semibold bg-primary-300 rounded-md"
-                (click)="actionUser(actions.add)">
-            <i class="fa-solid fa-plus me-2"></i>
-            Agregar
-        </button>
-    </div>
-
-    <mat-progress-bar mode="indeterminate" *ngIf="loadProcess"></mat-progress-bar>
-
-    @if (viewTable) {
-        <div class="overflow-x-scroll-70">
-            <table class="min-w-full bg-white dark:bg-gray-800">
-                <thead>
-                <tr>
-                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-                        ID
-                    </th>
-                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-                        Nombre
-                    </th>
-                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-                        <!-- Cedula-->
-                        Email
-                    </th>
-                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-                        <!--                        Nacimiento-->
-                        Role
-                    </th>
-                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-                        Avatar
-                    </th>
-                    <!--                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">-->
-                    <!--                        Opciones-->
-                    <!--                    </th>-->
-                </tr>
-                </thead>
-
-                <tbody class="divide-y divide-gray-200 dark:divide-gray-100">
-                    @for (worker of usersSystem | filter : searchText; track worker) {
-                        <tr>
-                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ worker.id }}</td>
-                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ worker.name }}</td>
-                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ worker.email }}</td>
-                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ worker?.role?.name }}</td>
-                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">
-                                <img class="w-8 h-8 rounded-full" src="https://avatar.iran.liara.run/public/boy"
-                                     alt="Profile photo">
-                            </td>
-                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">
-                                <button type="button" [matMenuTriggerFor]="menu" btn-color color="primary"
-                                        [raised]="true" (click)="setItem(worker)">
-                                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        <nav aria-label="Page navigation example" class="text-right me-4">
-            <ul class="inline-flex -space-x-px text-sm mt-3">
-                <li>
-                    <a class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                </li>
-                <li>
-                    <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                </li>
-                <li>
-                    <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                </li>
-                <li>
-                    <a aria-current="page"
-                       class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                </li>
-                <li>
-                    <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-                </li>
-                <li>
-                    <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-                </li>
-                <li>
-                    <a class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                </li>
-            </ul>
-        </nav>
-    } @else {
-        <div class="overflow-x-scroll-75">
-            <div class="flex flex-wrap gap-2 justify-center">
-                @for (worker of usersSystem | filter : searchText; track worker) {
-                    <div class="w-1/6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                        <div class="flex justify-end px-4 pt-4">
-                            <button (click)="setItem(worker)" [matMenuTriggerFor]="menu"
-                                    class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
-                                    type="button">
-                                <span class="sr-only">Open dropdown</span>
-                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                     fill="currentColor" viewBox="0 0 16 3">
-                                    <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="flex flex-col items-center pb-10">
-                            <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
-                                 src="https://avatar.iran.liara.run/public/boy" alt="Bonnie image"/>
-                            <h5 class="mb-1 text-sm font-medium text-center text-gray-900 dark:text-white">{{ worker.name }}</h5>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">{{ worker.cedula }}</span>
-                        </div>
-                    </div>
-                }
+            <div class="flex flex-col items-center pb-10">
+              <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
+                   src="https://avatar.iran.liara.run/public/boy" alt="Bonnie image"/>
+              <h5 class="mb-1 text-sm font-medium text-center text-gray-900 dark:text-white">{{ worker.name }}</h5>
+              <span class="text-sm text-gray-500 dark:text-gray-400">{{ worker.cedula }}</span>
             </div>
-        </div>
-    }
+          </div>
+        }
+      </div>
+    </div>
+  }
 
 </div>
 
 <mat-menu #menu="matMenu">
-    <ul class="py-2 dark:bg-gray-800" aria-labelledby="dropdownButton">
-        <li>
-            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-               (click)="actionUser(actions.add)">
-                <i class="fa-solid fa-plus me-2"></i>
-                Agregar
-            </a>
-        </li>
-        <li>
-            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-               (click)="actionUser(actions.edit)">
-                <i class="fa-solid fa-pen-to-square"></i>
-                Editar
-            </a>
-        </li>
-        <li>
-            <a class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-               (click)="deleteItem()">
-                <i class="fa-solid fa-trash"></i>
-                Eliminar
-            </a>
-        </li>
-    </ul>
+  <ul class="py-2 dark:bg-gray-800" aria-labelledby="dropdownButton">
+    <li>
+      <a
+        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+        (click)="actionUser(actions.add)">
+        <i class="fa-solid fa-plus me-2"></i>
+        Agregar
+      </a>
+    </li>
+    <li>
+      <a
+        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+        (click)="actionUser(actions.edit)">
+        <i class="fa-solid fa-pen-to-square"></i>
+        Editar
+      </a>
+    </li>
+    <li>
+      <a
+        class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+        (click)="deleteItem()">
+        <i class="fa-solid fa-trash"></i>
+        Eliminar
+      </a>
+    </li>
+  </ul>
 </mat-menu>

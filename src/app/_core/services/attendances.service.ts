@@ -1,34 +1,39 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '@environment';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {environment} from '@environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PaymentService {
+export class AttendanceService {
   private readonly baseUrl: string = environment.apiUrl + '/api/attendance';
 
-  constructor(private http: HttpClient) { }
-
-  getAll(): Observable<any> {
-    return this.http.get<any>(this.baseUrl);
+  constructor(private http: HttpClient) {
   }
 
-  getByUser(): Observable<any> {
-    return this.http.get<any>(this.baseUrl + '/user' );
+  // Registrar la asistencia (entrada)
+  registerEntry(controlNumber: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, {user_number: controlNumber});
   }
 
-  getById(id: number): Observable<any> {
-    return this.http.get<any>(`${ this.baseUrl }/${ id }`);
+  // Obtener todas las asistencias
+  getAttendances(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/index`);
   }
 
-  create(data: any): Observable<any> {
-    return this.http.post<any>(`${ this.baseUrl }`, data);
+  // Obtener una asistencia específica
+  getAttendance(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/show/${id}`);
   }
 
-  updateStatus(data: any): Observable<any> {
-    return this.http.post<any>(`${ this.baseUrl }/updateStatus`, data);
+  // Actualizar asistencia
+  updateAttendance(id: number, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/update/${id}`, data);
   }
 
+  // Eliminar asistencia (borrado suave)
+  deleteAttendance(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/delete/${id}`);
+  }
 }

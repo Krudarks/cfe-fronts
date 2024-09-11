@@ -6,7 +6,6 @@ import {MatProgressBar} from "@angular/material/progress-bar";
 import {NgIf} from "@angular/common";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {VehicleService} from "../../../_core/services/vehicle.service";
-import {TableActions} from "../../../_shared/table/TableActions";
 
 @Component({
   selector: 'app-action-vehicle',
@@ -24,18 +23,16 @@ import {TableActions} from "../../../_shared/table/TableActions";
 })
 export class ActionVehicleComponent implements OnInit {
   @Input() dialogData: any;
-
   formGroup: FormGroup;
   loadProcess: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<ActionVehicleComponent>,
     private vehicleService: VehicleService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    const {action, item} = this.dialogData;
+    const { action, item } = this.dialogData;
 
     this.formGroup = new FormGroup({
       brand: new FormControl('', [Validators.required]),
@@ -43,8 +40,12 @@ export class ActionVehicleComponent implements OnInit {
       plates: new FormControl('', [Validators.required]),
     });
 
-    if (action === TableActions.edit) {
-      this.formGroup.patchValue(item);
+    if (action === 'edit' && item) {
+      this.formGroup.patchValue({
+        brand: item.brand,
+        model: item.model,
+        plates: item.plates,
+      });
     }
   }
 
@@ -55,13 +56,12 @@ export class ActionVehicleComponent implements OnInit {
 
     this.loadProcess = true;
 
-    if (this.dialogData.action === TableActions.add) {
-      return this.add(this.formGroup.value);
+    if (this.dialogData.action === 'add') {
+      this.add(this.formGroup.value);
+    } else {
+      const { id } = this.dialogData.item;
+      this.update(id, this.formGroup.value);
     }
-
-    const { id } = this.dialogData.item;
-
-    this.update(id, this.formGroup.value);
   }
 
   private add(params): void {
@@ -71,12 +71,8 @@ export class ActionVehicleComponent implements OnInit {
           this.dialogRef.close(response);
         }
       },
-      complete: () => {
-        this.loadProcess = false;
-      },
-      error: () => {
-        this.loadProcess = false;
-      }
+      complete: () => { this.loadProcess = false; },
+      error: () => { this.loadProcess = false; }
     });
   }
 
@@ -87,12 +83,8 @@ export class ActionVehicleComponent implements OnInit {
           this.dialogRef.close(response);
         }
       },
-      complete: () => {
-        this.loadProcess = false;
-      },
-      error: () => {
-        this.loadProcess = false;
-      }
+      complete: () => { this.loadProcess = false; },
+      error: () => { this.loadProcess = false; }
     });
   }
 }

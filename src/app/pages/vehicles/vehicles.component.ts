@@ -69,7 +69,7 @@ export class VehiclesComponent implements OnInit {
     this.loadProcess = true;
     this.vehicleService.getAll().subscribe({
       next: (data) => {
-        this.vehicles = data;  // Considera renombrar `groups` a `diplomas`
+        this.vehicles = data;
       },
       complete: () => { this.loadProcess = false; },
       error: () => { this.loadProcess = false; }
@@ -104,19 +104,16 @@ export class VehiclesComponent implements OnInit {
       if (Utils.isObject(result)) {
         if (result.status) {
           if (action === this.actions.add) {
-            this.vehicles.push(result.data);  // Considera renombrar `groups` a `diplomas`
-            this.alertBannerComponent.setMessage('Vehiculo agregado con exito', 'success');
+            this.vehicles.push(result.data);
+            this.alertBannerComponent.setMessage('Vehiculo Agregado con Éxito', 'success');
             return;
           }
 
-          const { name, description, id } = result.data;
-          const index = this.vehicles.findIndex(diploma => diploma.id === id);
+          const { brand, model, plates, vehicle_number, id } = result.data;
+          const index = this.vehicles.findIndex(vehicle => vehicle.id === id);
           if (index !== -1) {
-            this.selectItem.name = name;
-            this.selectItem.description = description;
-            this.vehicles[index] = this.selectItem;
-
-            this.alertBannerComponent.setMessage('Vehiculo Actualizado con Exito', 'success');
+            this.vehicles[index] = { ...this.vehicles[index], brand, model, plates, vehicle_number };
+            this.alertBannerComponent.setMessage('Vehiculo Actualizado con Éxito', 'success');
           }
         }
       }
@@ -137,10 +134,8 @@ export class VehiclesComponent implements OnInit {
         this.vehicleService.delete(item.id).subscribe({
           next: (response) => {
             if (response.status) {
-              const index = this.vehicles.findIndex(vehicles => vehicles.id === item.id);  // Considera renombrar `groups` a `diplomas`
-              if (index !== -1) {
-                this.vehicles.splice(index, 1);
-              }
+              this.vehicles = this.vehicles.filter(vehicle => vehicle.id !== item.id);
+              this.alertBannerComponent.setMessage('Vehiculo Eliminado con Éxito', 'success');
             }
           },
           complete: () => { this.loadProcess = false; },
