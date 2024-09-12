@@ -1,0 +1,17 @@
+<h2>Asistencia del {{ attendance.date | date:'dd/MM/yy' }}</h2>
+<table class="table-auto w-full">
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Hora de Entrada</th>
+    <th>Hora de Salida</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let worker of attendance.workers">
+    <td>{{ worker.name }}</td>
+    <td>{{ worker.entryTime | date:'HH:mm' }}</td>
+    <td>{{ worker.exitTime | date:'HH:mm' }}</td>
+  </tr>
+  </tbody>
+</table>

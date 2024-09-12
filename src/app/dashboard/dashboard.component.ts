@@ -46,12 +46,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.localStorageService.isTest) {
-      const labelTeacher = [ 'groups_teacher', 'diploma', 'payment_teacher' ];
+      const labelTeacher = [ 'attendance-day' ];
       this.menuItems = Menu.filter(val => labelTeacher.includes(val.code));
       return;
     }
     if (this.localStorageService.isWorker) {
-      const labelStudents = [ 'application_enrollment', 'document_registration', 'payment_students', 'group_student' ];
+      const labelStudents = [  ];
       this.menuItems = Menu.filter(val => labelStudents.includes(val.code))
       .sort((a, b) => labelStudents.indexOf(a.code) - labelStudents.indexOf(b.code));
       return;

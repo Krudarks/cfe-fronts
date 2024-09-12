@@ -12,28 +12,31 @@ export class AttendanceService {
   constructor(private http: HttpClient) {
   }
 
-  // Registrar la asistencia (entrada)
+  getAllAttendances(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/all`);
+  }
+
+  getAttendanceDetails(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/details/${id}`);
+  }
+
   registerEntry(controlNumber: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, {user_number: controlNumber});
+    return this.http.post(`${this.baseUrl}/entry`, { controlNumber });
   }
 
-  // Obtener todas las asistencias
-  getAttendances(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/index`);
+  registerExit(controlNumber: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/exit`, { controlNumber });
   }
 
-  // Obtener una asistencia específica
-  getAttendance(id: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/show/${id}`);
+  downloadReport(id: number): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/report/${id}`, { responseType: 'blob' });
   }
 
-  // Actualizar asistencia
-  updateAttendance(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/update/${id}`, data);
-  }
-
-  // Eliminar asistencia (borrado suave)
   deleteAttendance(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/delete/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  getAttendanceStatus(controlNumber: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/status/${controlNumber}`);
   }
 }

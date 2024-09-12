@@ -1,0 +1,29 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-xl font-bold mb-4">Reportes de Vehículos</h2>
+  <table class="min-w-full table-auto">
+    <thead>
+    <tr>
+      <th class="px-4 py-2">Reporte</th>
+      <th class="px-4 py-2">Fecha</th>
+      <th class="px-4 py-2">Opciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let report of reports">
+      <td class="border px-4 py-2">{{ report.id }}</td>
+      <td class="border px-4 py-2">{{ report.date | date: 'shortDate' }}</td>
+      <td class="border px-4 py-2">
+        <button (click)="viewReport(report.id)" class="text-blue-500">Ver</button>
+        <button (click)="deleteReport(report.id)" class="text-red-500 ml-4">Eliminar</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <button (click)="openReportModal()" class="mt-4 bg-green-500 text-white py-2 px-4 rounded">
+    Registrar reporte del día
+  </button>
+
+  <!-- Modal para registrar un nuevo reporte -->
+  <app-action-vehicle *ngIf="isModalOpen" (closeModal)="closeReportModal()" (saveReport)="onReportSaved()"></app-action-vehicle>
+</div>

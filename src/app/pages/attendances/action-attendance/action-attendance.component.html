@@ -1,0 +1,21 @@
+<div class="card mx-auto my-8 p-4 max-w-md bg-white shadow-lg rounded-lg">
+  <h2 class="text-2xl font-semibold mb-4">¡Buenos días Amigo!</h2>
+  <p class="mb-4">Ingresa tu número de control de asistencia:</p>
+  <form (ngSubmit)="registerAttendance()">
+    <input
+      type="text"
+      [(ngModel)]="controlNumber"
+      name="controlNumber"
+      placeholder="Número de Control"
+      class="border p-2 rounded w-full mb-4"
+      required
+    />
+    <button
+      type="submit"
+      class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      [disabled]="isProcessing || !isBefore5PM()"
+    >
+      {{ isCheckedIn ? 'Registrar Salida' : 'Registrar Entrada' }}
+    </button>
+  </form>
+</div>

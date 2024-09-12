@@ -1,0 +1,19 @@
+<div class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+  <div class="bg-white p-8 rounded-lg w-1/2">
+    <h3 class="text-lg font-bold mb-4">Registrar reporte del día</h3>
+
+    <form (ngSubmit)="saveReport()">
+      <div *ngFor="let vehicle of vehicles" class="mb-4">
+        <span>{{ vehicle.name }} ({{ vehicle.model }})</span>
+        <select [(ngModel)]="vehicle.status_id" class="ml-4 p-2 border" name="status-{{ vehicle.id }}">
+          <option *ngFor="let status of statuses" [value]="status.id">{{ status.name }}</option>
+        </select>
+      </div>
+
+      <div class="mt-4">
+        <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded">Guardar</button>
+        <button type="button" (click)="closeModal()" class="ml-4 bg-red-500 text-white py-2 px-4 rounded">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>

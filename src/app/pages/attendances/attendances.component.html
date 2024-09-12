@@ -1,0 +1,22 @@
+<table class="table-auto w-full">
+  <thead>
+  <tr>
+    <th>Registro</th>
+    <th>Fecha</th>
+    <th>Trabajadores</th>
+    <th>Opciones</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let attendance of attendances" (click)="viewDetails(attendance.id)">
+    <td>{{ attendance.id }}</td>
+    <td>{{ attendance.date | date:'dd/MM/yy' }}</td>
+    <td>{{ attendance.workerCount }}</td>
+    <td>
+      <button (click)="downloadReport(attendance.id, $event)">Descargar</button>
+      <button (click)="deleteRecord(attendance.id, $event)">Eliminar</button>
+      <button (click)="editRecord(attendance.id, $event)">Editar</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

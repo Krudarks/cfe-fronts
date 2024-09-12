@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import { RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {AttendanceService} from "@services";
 
 @Component({
@@ -16,43 +16,49 @@ import {AttendanceService} from "@services";
   styleUrl: './attendances.component.scss'
 })
 export class AttendancesComponent implements OnInit {
-  attendanceReports: any[] = [];
+  attendances: any[] = [];
 
-  constructor(private attendanceService: AttendanceService) {}
+  constructor(
+    private attendanceService: AttendanceService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.loadAttendances();
   }
 
   loadAttendances() {
-    this.attendanceService.getAttendances().subscribe(
-      (data) => {
-        this.attendanceReports = data; // Ajusta esto según el formato de respuesta de tu API
-      },
-      (error) => {
-        console.error('Error al cargar las asistencias:', error);
-      }
-    );
+    this.attendanceService.getAllAttendances().subscribe(data => {
+      this.attendances = data;
+    });
   }
 
-  verReporte(reportId: number) {
-    this.attendanceService.getAttendance(reportId).subscribe(
-      (report) => {
-        console.log('Ver reporte:', report);
-      },
-      (error) => {
-        console.error('Error al cargar el reporte:', error);
-      }
-    );
+  viewDetails(id: number) {
+    this.router.navigate(['/attendance', id]);
   }
 
-  descargarReporte(reportId: number) {
-    // Lógica para descargar el reporte (esto puede requerir una API diferente para la generación de PDFs)
-    console.log('Descargar reporte:', reportId);
+  downloadReport(id: number, event: Event) {
+    event.stopPropagation();
+    this.attendanceService.downloadReport(id).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `reporte_${id}.pdf`;
+      a.click();
+    });
   }
 
-  editarReporte(reportId: number) {
-    // Lógica para editar el reporte (esto puede implicar abrir un formulario con los datos)
-    console.log('Editar reporte:', reportId);
+  deleteRecord(id: number, event: Event) {
+    event.stopPropagation();
+    if (confirm('¿Estás seguro de que quieres eliminar este registro?')) {
+      this.attendanceService.deleteAttendance(id).subscribe(() => {
+        this.loadAttendances();
+      });
+    }
+  }
+
+  editRecord(id: number, event: Event) {
+    event.stopPropagation();
+    // Implementar lógica para editar el registro
   }
 }

@@ -35,4 +35,10 @@ export const Menu = [
     icon: 'fa-solid fa-calendar-check',
     routerLink: ['/layout/attendance-car'],
   },
+  {
+    label: 'Detalles Vehiculos',
+    code: 'attendance-cardeta',
+    icon: 'fa-solid fa-calendar-check',
+    routerLink: ['/layout/attendance-cardeta'],
+  },
 ];

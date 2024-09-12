@@ -1,8 +1,6 @@
 import {Routes} from '@angular/router';
 import {loggedGuard} from './_core/guards/logged.guard';
 import {authGuard} from './_core/guards/auth.guard';
-import {testGuard} from './_core/guards/test.guard';
-import {workerGuard} from './_core/guards/worker.guard';
 
 export const routes: Routes = [
   {path: '', redirectTo: 'auth', pathMatch: 'full'},
@@ -12,11 +10,6 @@ export const routes: Routes = [
         path: '',
         loadComponent: () => import('./auth/login/login.component')
           .then(m => m.LoginComponent)
-      },
-      {
-        path: 'register',
-        loadComponent: () => import('./auth/register/register.component')
-          .then(m => m.RegisterComponent)
       },
       {
         path: 'forgot-password',
@@ -64,6 +57,11 @@ export const routes: Routes = [
         path: 'attendance-day',
         loadComponent: () => import('./pages/attendances/action-attendance/action-attendance.component')
           .then(m => m.ActionAttendanceComponent),
+      },
+      {
+        path: 'attendance-car',
+        loadComponent: () => import('./pages/attendance-vehicles/attendance-vehicles.component')
+          .then(m => m.AttendanceVehiclesComponent),
       },
     ],
   },

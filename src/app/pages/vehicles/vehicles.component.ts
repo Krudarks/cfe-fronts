@@ -1,28 +1,44 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {BtnColorDirective} from "../../_core/directives/btn-color.directive";
-import {FilterPipe} from "../../_core/pipes/filter.pipe";
-import {MatMenu, MatMenuTrigger} from "@angular/material/menu";
-import {MatProgressBar} from "@angular/material/progress-bar";
-import {NgClass, NgIf} from "@angular/common";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {TableActions} from "../../_shared/table/TableActions";
-import {DialogService} from "../../_shared/modal/dialog.service";
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {Vehicle} from "./vehicles.mockup";
-import {VehicleService} from "../../_core/services/vehicle.service";
-import {ActionVehicleComponent} from "./action-vehicle/action-vehicle.component";
-import {Utils} from "../../_core/utils/Utils";
-import {AlertBannerComponent} from "../../_shared/alert-banner/alert-banner.component";
-import {LocalStorageService} from "@services";
-import {Router} from "@angular/router";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { BtnColorDirective } from "../../_core/directives/btn-color.directive";
+import { FilterPipe } from "../../_core/pipes/filter.pipe";
+import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
+import { MatProgressBar } from "@angular/material/progress-bar";
+import { NgClass, NgForOf, NgIf } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { TableActions } from "../../_shared/table/TableActions";
+import { DialogService } from "../../_shared/modal/dialog.service";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { VehicleService } from "../../_core/services/vehicle.service";
+import { ActionVehicleComponent } from "./action-vehicle/action-vehicle.component";
+import { Utils } from "../../_core/utils/Utils";
+import { AlertBannerComponent } from "../../_shared/alert-banner/alert-banner.component";
+import { LocalStorageService } from "@services";
+import { Router } from "@angular/router";
 import { Modal } from '../../_core/utils/Modal';
+import { MatMenuModule } from '@angular/material/menu';
+import {MatButton} from "@angular/material/button";
 
+// Definir la interfaz para un vehículo
+interface Vehicle {
+  id: number;
+  brand: string;
+  model: string;
+  plates: string;
+  vehicle_number: string;
+}
+
+// Definir la interfaz para la respuesta del servicio
+interface VehicleResponse {
+  vehicles: Vehicle[];
+  status: boolean;
+}
 
 @Component({
   selector: 'app-vehicles',
   standalone: true,
   imports: [
     BtnColorDirective,
+    MatMenuModule,
     FilterPipe,
     MatMenu,
     MatProgressBar,
@@ -30,32 +46,31 @@ import { Modal } from '../../_core/utils/Modal';
     ReactiveFormsModule,
     MatMenuTrigger,
     NgClass,
-    FormsModule
+    FormsModule,
+    NgForOf,
+    MatButton
   ],
   templateUrl: './vehicles.component.html',
-  styleUrl: './vehicles.component.scss'
+  styleUrls: ['./vehicles.component.scss']
 })
 export class VehiclesComponent implements OnInit {
   @ViewChild('alertBannerComponent') alertBannerComponent: AlertBannerComponent;
 
-  vehicles: any[] = [];
-  searchText: string;
+  vehicles: Vehicle[] = [];
+  searchText: string = '';
   viewTable: boolean = true;
-
-  selectItem: any;
+  selectItem: Vehicle | undefined;
   actions = TableActions;
   loadProcess: boolean = false;
   isAdmin: boolean = false;
-
 
   constructor(
     private dialogService: DialogService,
     private vehicleService: VehicleService,
     public dialog: MatDialog,
-    private localStorageService: LocalStorageService, private router: Router
-
-  ) {
-  }
+    private localStorageService: LocalStorageService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     if (this.localStorageService.isAdmin) {
@@ -68,15 +83,24 @@ export class VehiclesComponent implements OnInit {
   private getVehicles(): void {
     this.loadProcess = true;
     this.vehicleService.getAll().subscribe({
-      next: (data) => {
-        this.vehicles = data;
+      next: (response: VehicleResponse) => {
+        console.log('Datos recibidos:', response);
+        if (response && Array.isArray(response.vehicles)) {
+          this.vehicles = response.vehicles;
+        } else {
+          console.error('Se esperaba un array dentro de la propiedad `vehicles`, pero se recibió:', response);
+          this.vehicles = [];
+        }
       },
       complete: () => { this.loadProcess = false; },
-      error: () => { this.loadProcess = false; }
+      error: (err) => {
+        console.error('Error al obtener los vehículos:', err);
+        this.loadProcess = false;
+      }
     });
   }
 
-  setItem(item): void {
+  setItem(item: Vehicle): void {
     this.selectItem = item;
   }
 
@@ -86,7 +110,7 @@ export class VehiclesComponent implements OnInit {
 
   actionVehicle(action: string): void {
     if (action === TableActions.edit && this.selectItem === undefined) return;
-    const title: string = action === TableActions.add ? 'Nuevo Vehiculo' : 'Editar Vehiculo ' + this.selectItem.nombre;
+    const title: string = action === TableActions.add ? 'Nuevo Vehiculo' : 'Editar Vehiculo ' + (this.selectItem?.brand || '');
 
     const config: MatDialogConfig<any> = {
       width: '50%',
@@ -143,5 +167,10 @@ export class VehiclesComponent implements OnInit {
         });
       }
     });
+  }
+
+  // Función de trackBy para ngFor
+  trackVehicle(index: number, vehicle: Vehicle): number {
+    return vehicle.id; // Asegúrate de que `id` sea único para cada vehículo
   }
 }

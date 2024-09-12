@@ -1,6 +1,6 @@
 <div class="w-full p-6">
   <div class="mb-4">
-    <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Vehiculos</h2>
+    <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Vehículos</h2>
   </div>
 
   <div class="grid grid-cols-12 gap-4 my-3">
@@ -13,12 +13,12 @@
       <div class="flex justify-end items-center">
         <div class="flex space-x-2">
           <button class="p-2 rounded-md"
-                  [ngClass]="{'bg-primary-200 text-dark': viewTable, 'bg-gray-200 dark:bg-gray-800': !viewTable, }"
+                  [ngClass]="{'bg-primary-200 text-dark': viewTable, 'bg-gray-200 dark:bg-gray-800': !viewTable}"
                   (click)="changeView('table')">
             <i class="fa-solid fa-list"></i>
           </button>
-          <button class="p-2 rounded-md "
-                  [ngClass]="{'bg-primary-200 text-dark': !viewTable, 'bg-gray-200 dark:bg-gray-800': viewTable }"
+          <button class="p-2 rounded-md"
+                  [ngClass]="{'bg-primary-200 text-dark': !viewTable, 'bg-gray-200 dark:bg-gray-800': viewTable}"
                   (click)="changeView('grid')">
             <i class="fa-solid fa-border-all"></i>
           </button>
@@ -37,154 +37,73 @@
 
   <mat-progress-bar mode="indeterminate" *ngIf="loadProcess"></mat-progress-bar>
 
-  @if (viewTable) {
-    <div class="overflow-x-scroll-70">
+  <div *ngIf="viewTable">
+    <div class="overflow-x-auto">
       <table class="min-w-full bg-white dark:bg-gray-800">
         <thead>
         <tr>
-          <th
-            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-            ID
-          </th>
-          <th
-            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-            Marca
-          </th>
-          <th
-            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-            Model
-          </th>
-          <th
-            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-            Placas
-          </th>
-          <th
-            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-            Clave
-          </th>
-          <th
-            class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
-            Opciones
-          </th>
+          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">ID</th>
+          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Marca</th>
+          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Modelo</th>
+          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Placas</th>
+          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Clave</th>
+          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Opciones</th>
         </tr>
         </thead>
-
         <tbody class="divide-y divide-gray-200 dark:divide-gray-100">
-          @for (vehicle of vehicles | filter : searchText; track vehicle) {
-            <tr>
-              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.id }}</td>
-              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.brand }}</td>
-              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.model }}</td>
-              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.plates }}</td>
-              <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.vehicle_number }}</td>
-              <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
-                <button type="button" [matMenuTriggerFor]="menu" btn-color color="primary"
-                        [raised]="true" (click)="setItem(vehicle)">
-                  <i class="fa-solid fa-ellipsis-vertical"></i>
-                </button>
-              </td>
-            </tr>
-          }@empty {
-            Sin Vehiculos para Mostrar
-          }
+        <tr *ngFor="let vehicle of vehicles | filter: searchText; trackBy: trackVehicle">
+          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.id }}</td>
+          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.brand }}</td>
+          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.model }}</td>
+          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.plates }}</td>
+          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.vehicle_number }}</td>
+          <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
+            <!-- Botón que activa el menú -->
+            <button mat-button [matMenuTriggerFor]="menu">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="vehicles.length === 0">
+          <td colspan="6" class="text-center">Sin Vehículos para Mostrar</td>
+        </tr>
         </tbody>
       </table>
     </div>
+  </div>
 
-    <nav aria-label="Page navigation example" class="text-right me-4">
-      <ul class="inline-flex -space-x-px text-sm mt-3">
-        <li>
-          <a
-            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-        </li>
-        <li>
-          <a
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-        </li>
-        <li>
-          <a
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-        </li>
-        <li>
-          <a aria-current="page"
-             class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-        </li>
-        <li>
-          <a
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-        </li>
-        <li>
-          <a
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-        </li>
-        <li>
-          <a
-            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-        </li>
-      </ul>
-    </nav>
-  } @else {
-    <div class="overflow-x-scroll-75">
+  <div *ngIf="!viewTable">
+    <div class="overflow-x-auto">
       <div class="flex flex-wrap gap-2 justify-center">
-        @for (vehicle of vehicles | filter : searchText; track vehicle) {
-          <div class="w-1/6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex justify-end px-4 pt-4">
-              <button (click)="setItem(vehicle)" [matMenuTriggerFor]="menu"
-                      class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5"
-                      type="button">
-                <span class="sr-only">Open dropdown</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                     fill="currentColor" viewBox="0 0 16 3">
-                  <path
-                    d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
-                </svg>
-              </button>
-            </div>
-            <div class="flex flex-col items-center pb-10">
-            </div>
+        <div *ngFor="let vehicle of vehicles | filter: searchText" class="w-1/6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div class="flex justify-end px-4 pt-4">
+            <!-- Botón que activa el menú para vista de tarjeta -->
+            <button mat-button [matMenuTriggerFor]="menu">
+              <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
           </div>
-        }@empty {
-          Sin Vehiculos para Mostrar
-        }
+          <div class="flex flex-col items-center pb-10">
+            <!-- Información adicional del vehículo aquí -->
+          </div>
+        </div>
+        <div *ngIf="vehicles.length === 0" class="text-center w-full">Sin Vehículos para Mostrar</div>
       </div>
     </div>
-  }
-
+  </div>
 </div>
 
+<!-- Definición del menú -->
 <mat-menu #menu="matMenu">
-  <ul class="py-2 dark:bg-gray-800" aria-labelledby="dropdownButton">
-    <li>
-      <a
-        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-        (click)="actionVehicle(actions.add)">
-        <i class="fa-solid fa-plus me-2"></i>
-        Agregar
-      </a>
-    </li>
-    <li>
-      <a
-        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-        (click)="actionVehicle(actions.edit)">
-        <i class="fa-solid fa-pen-to-square"></i>
-        Editar
-      </a>
-    </li>
-    <li>
-      <a
-        class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-        (click)="deleteItem">
-        <i class="fa-solid fa-trash"></i>
-        Eliminar
-      </a>
-    </li>
-    <li>
-      <a
-        class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-        >
-        <i class="fa-solid fa-users"></i>
-        Ver Reporte
-      </a>
-    </li>
-  </ul>
+  <button mat-menu-item (click)="actionVehicle(actions.add)">
+    <i class="fa-solid fa-plus me-2"></i> Agregar
+  </button>
+  <button mat-menu-item (click)="actionVehicle(actions.edit)">
+    <i class="fa-solid fa-pen-to-square"></i> Editar
+  </button>
+  <button mat-menu-item (click)="deleteItem()">
+    <i class="fa-solid fa-trash"></i> Eliminar
+  </button>
+  <button mat-menu-item>
+    <i class="fa-solid fa-users"></i> Ver Reporte
+  </button>
 </mat-menu>
