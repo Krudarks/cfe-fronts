@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {Router, RouterLink} from "@angular/router";
-import {AttendanceService} from "@services";
+import { Component, OnInit } from '@angular/core';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import { AttendanceService } from '@services';
 
 @Component({
   selector: 'app-attendances',
@@ -23,21 +23,27 @@ export class AttendancesComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAttendances();
   }
 
-  loadAttendances() {
-    this.attendanceService.getAllAttendances().subscribe(data => {
-      this.attendances = data;
+  loadAttendances(): void {
+    this.attendanceService.getAllAttendances().subscribe({
+      next: data => {
+        if (data.status) {
+          this.attendances = data.data;
+          return
+        }
+        this.attendances = [];
+      }
     });
   }
 
-  viewDetails(id: number) {
+  viewDetails(id: number): void {
     this.router.navigate(['/attendance', id]);
   }
 
-  downloadReport(id: number, event: Event) {
+  downloadReport(id: number, event: Event): void {
     event.stopPropagation();
     this.attendanceService.downloadReport(id).subscribe(blob => {
       const url = window.URL.createObjectURL(blob);
@@ -48,7 +54,7 @@ export class AttendancesComponent implements OnInit {
     });
   }
 
-  deleteRecord(id: number, event: Event) {
+  deleteRecord(id: number, event: Event): void {
     event.stopPropagation();
     if (confirm('¿Estás seguro de que quieres eliminar este registro?')) {
       this.attendanceService.deleteAttendance(id).subscribe(() => {
@@ -57,7 +63,7 @@ export class AttendancesComponent implements OnInit {
     }
   }
 
-  editRecord(id: number, event: Event) {
+  editRecord(id: number, event: Event): void {
     event.stopPropagation();
     // Implementar lógica para editar el registro
   }

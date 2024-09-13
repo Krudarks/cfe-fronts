@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { NgClass, NgIf } from '@angular/common';
 import { FilterPipe } from '../../_core/pipes/filter.pipe';
@@ -13,6 +13,7 @@ import { DialogService } from '../../_shared/modal/dialog.service';
 import { Modal } from '../../_core/utils/Modal';
 import { UserService } from '@services';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { AlertBannerComponent } from '../../_shared/alert-banner/alert-banner.component';
 
 @Component({
   selector: 'app-users',
@@ -26,12 +27,15 @@ import { MatProgressBar } from '@angular/material/progress-bar';
     MatMenu,
     MatMenuTrigger,
     MatProgressBar,
-    NgIf
+    NgIf,
+    AlertBannerComponent
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
 export class UsersComponent implements OnInit {
+  @ViewChild('alertBannerComponent') alertBannerComponent: AlertBannerComponent;
+
   usersSystem: any[] = [];
   selectItem: any;
   searchText: string;
@@ -86,11 +90,13 @@ export class UsersComponent implements OnInit {
         if (result.status) {
           if (action === this.actions.add) {
             this.usersSystem.push(result.data);
+            this.alertBannerComponent.setMessage('Trabajador Agregado con Éxito', 'success');
           } else {
             const index = this.usersSystem.findIndex(teacher => teacher.id === result.data.user.id);
             if (index !== -1) {
               this.selectItem.name = result.data.name;
               this.usersSystem[index] = this.selectItem;
+              this.alertBannerComponent.setMessage('Trabajador Actualizado con Éxito', 'success');
             }
           }
         }

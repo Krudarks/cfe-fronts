@@ -13,7 +13,6 @@ import { ActionVehicleComponent } from "./action-vehicle/action-vehicle.componen
 import { Utils } from "../../_core/utils/Utils";
 import { AlertBannerComponent } from "../../_shared/alert-banner/alert-banner.component";
 import { LocalStorageService } from "@services";
-import { Router } from "@angular/router";
 import { Modal } from '../../_core/utils/Modal';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatButton} from "@angular/material/button";
@@ -48,7 +47,8 @@ interface VehicleResponse {
     NgClass,
     FormsModule,
     NgForOf,
-    MatButton
+    MatButton,
+    AlertBannerComponent
   ],
   templateUrl: './vehicles.component.html',
   styleUrls: ['./vehicles.component.scss']
@@ -69,7 +69,6 @@ export class VehiclesComponent implements OnInit {
     private vehicleService: VehicleService,
     public dialog: MatDialog,
     private localStorageService: LocalStorageService,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -84,13 +83,11 @@ export class VehiclesComponent implements OnInit {
     this.loadProcess = true;
     this.vehicleService.getAll().subscribe({
       next: (response: VehicleResponse) => {
-        console.log('Datos recibidos:', response);
-        if (response && Array.isArray(response.vehicles)) {
+        if (response.status) {
           this.vehicles = response.vehicles;
-        } else {
-          console.error('Se esperaba un array dentro de la propiedad `vehicles`, pero se recibió:', response);
-          this.vehicles = [];
+          return;
         }
+        this.vehicles = [];
       },
       complete: () => { this.loadProcess = false; },
       error: (err) => {
@@ -169,8 +166,4 @@ export class VehiclesComponent implements OnInit {
     });
   }
 
-  // Función de trackBy para ngFor
-  trackVehicle(index: number, vehicle: Vehicle): number {
-    return vehicle.id; // Asegúrate de que `id` sea único para cada vehículo
-  }
 }

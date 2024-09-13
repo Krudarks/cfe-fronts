@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {environment} from '@environment';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '@environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,30 +13,30 @@ export class AttendanceService {
   }
 
   getAllAttendances(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/all`);
+    return this.http.get(this.baseUrl + '/all');
   }
 
   getAttendanceDetails(id: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/details/${id}`);
+    return this.http.get(`${ this.baseUrl }/details/${ id }`);
   }
 
   registerEntry(controlNumber: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/entry`, { controlNumber });
+    return this.http.post(`${ this.baseUrl }/entry`, { controlNumber });
   }
 
   registerExit(controlNumber: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/exit`, { controlNumber });
+    return this.http.post(`${ this.baseUrl }/exit`, { controlNumber });
   }
 
   downloadReport(id: number): Observable<Blob> {
-    return this.http.get(`${this.baseUrl}/report/${id}`, { responseType: 'blob' });
+    return this.http.get(`${ this.baseUrl }/report/${ id }`, { responseType: 'blob' });
   }
 
   deleteAttendance(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+    return this.http.delete(`${ this.baseUrl }/${ id }`);
   }
 
   getAttendanceStatus(controlNumber: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/status/${controlNumber}`);
+    return this.http.get(`${ this.baseUrl }/status/${ controlNumber }`);
   }
 }

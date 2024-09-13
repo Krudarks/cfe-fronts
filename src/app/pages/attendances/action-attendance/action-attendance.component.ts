@@ -55,7 +55,12 @@ export class ActionAttendanceComponent implements OnInit {
     return currentHour < 17;
   }
 
-  checkInStatus() {
+  checkInStatus(): void {
+    if (!this.isProcessing) {
+      return
+    }
+
+    console.log(this.controlNumber);
     this.attendanceService.getAttendanceStatus(this.controlNumber).subscribe(data => {
       this.isCheckedIn = data.isCheckedIn;
     });
