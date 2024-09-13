@@ -72,7 +72,7 @@
                             <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.vehicle_number }}</td>
                             <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
                                 <!-- Botón que activa el menú -->
-                                <button mat-button [matMenuTriggerFor]="menu">
+                                <button mat-button [matMenuTriggerFor]="menu" (click)="setItem(vehicle)">
                                     <i class="fa-solid fa-ellipsis-vertical"></i>
                                 </button>
                             </td>
@@ -93,7 +93,7 @@
                      class="w-1/6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-end px-4 pt-4">
                         <!-- Botón que activa el menú para vista de tarjeta -->
-                        <button mat-button [matMenuTriggerFor]="menu">
+                        <button mat-button [matMenuTriggerFor]="menu" (click)="setItem(vehicle)">
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                     </div>
@@ -109,18 +109,34 @@
 
 <!-- Definición del menú -->
 <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="actionVehicle(actions.add)">
-        <i class="fa-solid fa-plus me-2"></i> Agregar
-    </button>
-    <button mat-menu-item (click)="actionVehicle(actions.edit)">
-        <i class="fa-solid fa-pen-to-square"></i> Editar
-    </button>
-    <button mat-menu-item (click)="deleteItem()">
-        <i class="fa-solid fa-trash"></i> Eliminar
-    </button>
-    <button mat-menu-item>
-        <i class="fa-solid fa-users"></i> Ver Reporte
-    </button>
+    <ul class="py-2 dark:bg-gray-800" aria-labelledby="dropdownButton">
+        <li>
+            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+               (click)="actionVehicle(actions.add)">
+                <i class="fa-solid fa-plus me-2"></i> Agregar
+            </a>
+        </li>
+
+        <li>
+            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+               (click)="actionVehicle(actions.edit)">
+                <i class="fa-solid fa-pen-to-square"></i> Editar
+            </a>
+        </li>
+
+        <li>
+            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+               (click)="deleteItem()">
+                <i class="fa-solid fa-trash"></i> Eliminar
+            </a>
+        </li>
+
+        <li>
+            <a class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                <i class="fa-solid fa-users"></i> Ver Reporte
+            </a>
+        </li>
+    </ul>
 </mat-menu>
 
 <app-alert-banner #alertBannerComponent></app-alert-banner>

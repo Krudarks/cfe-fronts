@@ -48,7 +48,6 @@ export class DetailAttendanceComponent implements OnInit {
       next: (data) => {
         if (data.status) {
           this.attendanceDetails = data.attendances;
-          console.log(this.attendanceDetails);
         }
       },
       complete: () => { this.loadProcess = false; },
