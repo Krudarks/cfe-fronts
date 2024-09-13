@@ -1,7 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {Router, RouterLink} from "@angular/router";
-import {AttendanceService} from "@services";
+import { Component, OnInit } from '@angular/core';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import { AttendanceService } from '@services';
+import { FilterPipe } from '../../_core/pipes/filter.pipe';
+import { FormsModule } from '@angular/forms';
+import { TableActions } from '../../_shared/table/TableActions';
+import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 
 @Component({
   selector: 'app-attendances',
@@ -10,46 +14,70 @@ import {AttendanceService} from "@services";
     NgIf,
     NgForOf,
     RouterLink,
-    DatePipe
+    DatePipe,
+    FilterPipe,
+    FormsModule,
+    MatMenu,
+    MatMenuTrigger
   ],
   templateUrl: './attendances.component.html',
   styleUrl: './attendances.component.scss'
 })
 export class AttendancesComponent implements OnInit {
   attendances: any[] = [];
+  searchText: string;
+  selectItem: any;
 
   constructor(
     private attendanceService: AttendanceService,
     private router: Router
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadAttendances();
   }
 
-  loadAttendances() {
-    this.attendanceService.getAllAttendances().subscribe(data => {
-      this.attendances = data;
+  setItem(item): void {
+    this.selectItem = item;
+  }
+
+  loadAttendances(): void {
+    this.attendanceService.getAllAttendances().subscribe({
+      next: data => {
+        if (data.status) {
+          this.attendances = data.data;
+          return
+        }
+        this.attendances = [];
+      }
     });
   }
 
-  viewDetails(id: number) {
-    this.router.navigate(['/attendance', id]);
+  viewDetails(): void {
+    if (this.selectItem === undefined) return;
+
+    const { date } = this.selectItem;
+    this.router.navigate(['/layout/attendance', date]);
   }
 
-  downloadReport(id: number, event: Event) {
-    event.stopPropagation();
+  downloadReport(): void {
+    if (this.selectItem === undefined) return;
+
+    const { id } = this.selectItem;
+
     this.attendanceService.downloadReport(id).subscribe(blob => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `reporte_${id}.pdf`;
+      a.download = `reporte_${ id }.pdf`;
       a.click();
     });
   }
 
-  deleteRecord(id: number, event: Event) {
-    event.stopPropagation();
+  deleteRecord(): void {
+    if (this.selectItem === undefined) return;
+
+    const { id } = this.selectItem;
     if (confirm('¿Estás seguro de que quieres eliminar este registro?')) {
       this.attendanceService.deleteAttendance(id).subscribe(() => {
         this.loadAttendances();
@@ -57,8 +85,10 @@ export class AttendancesComponent implements OnInit {
     }
   }
 
-  editRecord(id: number, event: Event) {
-    event.stopPropagation();
+  editRecord(): void {
+
     // Implementar lógica para editar el registro
   }
+
+  protected readonly actions = TableActions;
 }

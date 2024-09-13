@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {AttencarService} from "../../_core/services/attencar.service";
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
-import {ActionVehicleComponent} from "./action-vehicle/action-vehicle.component";
+import { Component, OnInit } from '@angular/core';
+import { AttencarService } from '../../_core/services/attencar.service';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { ActionVehicleComponent } from './action-vehicle/action-vehicle.component';
 
 @Component({
   selector: 'app-attendance-vehicles',
@@ -15,9 +15,9 @@ import {ActionVehicleComponent} from "./action-vehicle/action-vehicle.component"
   templateUrl: './attendance-vehicles.component.html',
   styleUrl: './attendance-vehicles.component.scss'
 })
-export class AttendanceVehiclesComponent implements OnInit{
+export class AttendanceVehiclesComponent implements OnInit {
   reports: any[] = [];
-  isModalOpen = false;
+  isModalOpen: boolean = false;
 
   constructor(private attencarService: AttencarService) {}
 
@@ -27,10 +27,9 @@ export class AttendanceVehiclesComponent implements OnInit{
 
   loadReports(): void {
     // Lógica para cargar los reportes
-    // @ts-ignore
-    this.attencarService.getReportById().subscribe((reports) => {
-      this.reports = reports;
-    });
+    // this.attencarService.getReportById().subscribe((reports) => {
+    //   this.reports = reports;
+    // });
   }
 
   openReportModal(): void {
@@ -48,7 +47,7 @@ export class AttendanceVehiclesComponent implements OnInit{
 
   viewReport(reportId: number): void {
     // Lógica para ver los detalles de un reporte
-    console.log(`Ver reporte ${reportId}`);
+    console.log(`Ver reporte ${ reportId }`);
   }
 
   deleteReport(reportId: number): void {

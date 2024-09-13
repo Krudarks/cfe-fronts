@@ -1,109 +1,126 @@
 <div class="w-full p-6">
-  <div class="mb-4">
-    <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Vehículos</h2>
-  </div>
-
-  <div class="grid grid-cols-12 gap-4 my-3">
-    <div class="col-span-7">
-      <input type="text" placeholder="Search..." [(ngModel)]="searchText"
-             class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-100 dark:text-white">
+    <div class="mb-4">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Vehículos</h2>
     </div>
 
-    <div class="col-span-5">
-      <div class="flex justify-end items-center">
-        <div class="flex space-x-2">
-          <button class="p-2 rounded-md"
-                  [ngClass]="{'bg-primary-200 text-dark': viewTable, 'bg-gray-200 dark:bg-gray-800': !viewTable}"
-                  (click)="changeView('table')">
-            <i class="fa-solid fa-list"></i>
-          </button>
-          <button class="p-2 rounded-md"
-                  [ngClass]="{'bg-primary-200 text-dark': !viewTable, 'bg-gray-200 dark:bg-gray-800': viewTable}"
-                  (click)="changeView('grid')">
-            <i class="fa-solid fa-border-all"></i>
-          </button>
+    <div class="grid grid-cols-12 gap-4 my-3">
+        <div class="col-span-7">
+            <input type="text" placeholder="Search..." [(ngModel)]="searchText"
+                   class="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:border-gray-100 dark:text-white">
         </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="my-3 flex justify-end">
-    <button class="px-4 py-2 text-sm text-dark font-semibold bg-primary-300 rounded-md"
-            (click)="actionVehicle(actions.add)">
-      <i class="fa-solid fa-plus me-2"></i>
-      Agregar
-    </button>
-  </div>
-
-  <mat-progress-bar mode="indeterminate" *ngIf="loadProcess"></mat-progress-bar>
-
-  <div *ngIf="viewTable">
-    <div class="overflow-x-auto">
-      <table class="min-w-full bg-white dark:bg-gray-800">
-        <thead>
-        <tr>
-          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">ID</th>
-          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Marca</th>
-          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Modelo</th>
-          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Placas</th>
-          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Clave</th>
-          <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">Opciones</th>
-        </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-200 dark:divide-gray-100">
-        <tr *ngFor="let vehicle of vehicles | filter: searchText; trackBy: trackVehicle">
-          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.id }}</td>
-          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.brand }}</td>
-          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.model }}</td>
-          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.plates }}</td>
-          <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.vehicle_number }}</td>
-          <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
-            <!-- Botón que activa el menú -->
-            <button mat-button [matMenuTriggerFor]="menu">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
-          </td>
-        </tr>
-        <tr *ngIf="vehicles.length === 0">
-          <td colspan="6" class="text-center">Sin Vehículos para Mostrar</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div *ngIf="!viewTable">
-    <div class="overflow-x-auto">
-      <div class="flex flex-wrap gap-2 justify-center">
-        <div *ngFor="let vehicle of vehicles | filter: searchText" class="w-1/6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <div class="flex justify-end px-4 pt-4">
-            <!-- Botón que activa el menú para vista de tarjeta -->
-            <button mat-button [matMenuTriggerFor]="menu">
-              <i class="fa-solid fa-ellipsis-vertical"></i>
-            </button>
-          </div>
-          <div class="flex flex-col items-center pb-10">
-            <!-- Información adicional del vehículo aquí -->
-          </div>
+        <div class="col-span-5">
+            <div class="flex justify-end items-center">
+                <div class="flex space-x-2">
+                    <button class="p-2 rounded-md"
+                            [ngClass]="{'bg-primary-200 text-dark': viewTable, 'bg-gray-200 dark:bg-gray-800': !viewTable}"
+                            (click)="changeView('table')">
+                        <i class="fa-solid fa-list"></i>
+                    </button>
+                    <button class="p-2 rounded-md"
+                            [ngClass]="{'bg-primary-200 text-dark': !viewTable, 'bg-gray-200 dark:bg-gray-800': viewTable}"
+                            (click)="changeView('grid')">
+                        <i class="fa-solid fa-border-all"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div *ngIf="vehicles.length === 0" class="text-center w-full">Sin Vehículos para Mostrar</div>
-      </div>
     </div>
-  </div>
+
+    <div class="my-3 flex justify-end">
+        <button class="px-4 py-2 text-sm text-dark font-semibold bg-primary-300 rounded-md"
+                (click)="actionVehicle(actions.add)">
+            <i class="fa-solid fa-plus me-2"></i>
+            Agregar
+        </button>
+    </div>
+
+    <mat-progress-bar mode="indeterminate" *ngIf="loadProcess"></mat-progress-bar>
+
+    <div *ngIf="viewTable">
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white dark:bg-gray-800">
+                <thead>
+                <tr>
+                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                        ID
+                    </th>
+                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                        Marca
+                    </th>
+                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                        Modelo
+                    </th>
+                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                        Placas
+                    </th>
+                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                        Clave
+                    </th>
+                    <th class="px-3 py-3 border-b-2 border-gray-200 dark:border-gray-100 text-left text-sm font-semibold text-gray-900 dark:text-gray-300">
+                        Opciones
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-100">
+                    @for (vehicle of vehicles | filter : searchText; track vehicle.id) {
+                        <tr>
+                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.id }}</td>
+                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.brand }}</td>
+                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.model }}</td>
+                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.plates }}</td>
+                            <td class="px-3 py-4 text-sm text-gray-900 dark:text-gray-300">{{ vehicle.vehicle_number }}</td>
+                            <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-300">
+                                <!-- Botón que activa el menú -->
+                                <button mat-button [matMenuTriggerFor]="menu">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                <tr *ngIf="vehicles.length === 0">
+                    <td colspan="6" class="text-center">Sin Vehículos para Mostrar</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div *ngIf="!viewTable">
+        <div class="overflow-x-auto">
+            <div class="flex flex-wrap gap-2 justify-center">
+                <div *ngFor="let vehicle of vehicles | filter: searchText"
+                     class="w-1/6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-end px-4 pt-4">
+                        <!-- Botón que activa el menú para vista de tarjeta -->
+                        <button mat-button [matMenuTriggerFor]="menu">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-center pb-10">
+                        <!-- Información adicional del vehículo aquí -->
+                    </div>
+                </div>
+                <div *ngIf="vehicles.length === 0" class="text-center w-full">Sin Vehículos para Mostrar</div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Definición del menú -->
 <mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="actionVehicle(actions.add)">
-    <i class="fa-solid fa-plus me-2"></i> Agregar
-  </button>
-  <button mat-menu-item (click)="actionVehicle(actions.edit)">
-    <i class="fa-solid fa-pen-to-square"></i> Editar
-  </button>
-  <button mat-menu-item (click)="deleteItem()">
-    <i class="fa-solid fa-trash"></i> Eliminar
-  </button>
-  <button mat-menu-item>
-    <i class="fa-solid fa-users"></i> Ver Reporte
-  </button>
+    <button mat-menu-item (click)="actionVehicle(actions.add)">
+        <i class="fa-solid fa-plus me-2"></i> Agregar
+    </button>
+    <button mat-menu-item (click)="actionVehicle(actions.edit)">
+        <i class="fa-solid fa-pen-to-square"></i> Editar
+    </button>
+    <button mat-menu-item (click)="deleteItem()">
+        <i class="fa-solid fa-trash"></i> Eliminar
+    </button>
+    <button mat-menu-item>
+        <i class="fa-solid fa-users"></i> Ver Reporte
+    </button>
 </mat-menu>
+
+<app-alert-banner #alertBannerComponent></app-alert-banner>
