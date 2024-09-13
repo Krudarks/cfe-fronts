@@ -40,13 +40,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.localStorageService.isAdmin) {
       const labelTeacher = [
         'layout', 'users', 'vehicles',
-        'attendance-worker', 'attendance_car','attendance-day',
+        'attendance-worker', 'attendance_car',
       ];
       this.menuItems = Menu.filter(val => labelTeacher.includes(val.code));
       return;
     }
     if (this.localStorageService.isTest) {
-      const labelTeacher = [ 'attendance-day' ];
+      const labelTeacher = [ ];
       this.menuItems = Menu.filter(val => labelTeacher.includes(val.code));
       return;
     }

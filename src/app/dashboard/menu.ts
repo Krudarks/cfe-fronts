@@ -24,12 +24,6 @@ export const Menu = [
     routerLink: ['/layout/attendance-worker'],
   },
   {
-    label: 'Asistencia Trabajadores',
-    code: 'attendance-day',
-    icon: 'fa-solid fa-id-card',
-    routerLink: ['/layout/attendance-day'],
-  },
-  {
     label: 'Asistencia Vehiculos',
     code: 'attendance_car',
     icon: 'fa-solid fa-calendar-check',

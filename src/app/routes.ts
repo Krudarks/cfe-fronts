@@ -54,16 +54,23 @@ export const routes: Routes = [
                 .then(m => m.AttendancesComponent),
             },
             {
-                path: 'attendance-day',
-                loadComponent: () => import('./pages/attendances/action-attendance/action-attendance.component')
-                .then(m => m.ActionAttendanceComponent),
-            },
-            {
                 path: 'attendance-car',
                 loadComponent: () => import('./pages/attendance-vehicles/attendance-vehicles.component')
                 .then(m => m.AttendanceVehiclesComponent),
             },
+
+            {
+                path: 'attendance/:id',
+                loadComponent: () => import('./pages/attendances/detail-attendance/detail-attendance.component')
+                .then(m => m.DetailAttendanceComponent),
+            },
         ],
+    },
+
+    {
+        path: 'attendance-day',
+        loadComponent: () => import('./pages/attendances/action-attendance/action-attendance.component')
+        .then(m => m.ActionAttendanceComponent),
     },
 
     {

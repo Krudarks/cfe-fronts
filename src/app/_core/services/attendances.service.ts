@@ -8,6 +8,7 @@ import { environment } from '@environment';
 })
 export class AttendanceService {
   private readonly baseUrl: string = environment.apiUrl + '/api/attendance';
+  private readonly baseUrl_: string = environment.apiUrl + '/api';
 
   constructor(private http: HttpClient) {
   }
@@ -16,12 +17,12 @@ export class AttendanceService {
     return this.http.get(this.baseUrl + '/all');
   }
 
-  getAttendanceDetails(id: string): Observable<any> {
-    return this.http.get(`${ this.baseUrl }/details/${ id }`);
+  getAttendanceDetails(params): Observable<any> {
+    return this.http.post(this.baseUrl + '/details', params);
   }
 
-  registerEntry(controlNumber: string): Observable<any> {
-    return this.http.post(`${ this.baseUrl }/entry`, { controlNumber });
+  registerEntry(controlNumber: any): Observable<any> {
+    return this.http.post(this.baseUrl_ + '/register', controlNumber);
   }
 
   registerExit(controlNumber: string): Observable<any> {
